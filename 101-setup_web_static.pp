@@ -5,6 +5,12 @@ exec { 'apt-get-update':
   path    => '/usr/bin:/usr/sbin:/bin',
 }
 
+exec { 'change-data-owner':
+  command => 'chown -hR ubuntu:ubuntu /data',
+  path    => '/bin',
+  onlyif  => '/bin/test ! -e /data/web_static/current',
+}
+
 exec { 'remove-current':
   command => 'rm -rf /data/web_static/current',
   path    => '/usr/bin:/usr/sbin:/bin',
